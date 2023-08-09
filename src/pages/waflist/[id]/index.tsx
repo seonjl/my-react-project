@@ -35,6 +35,12 @@ export default function WafDetailPage() {
   if (isLoading) return <div>Loading...</div>
   if (!waf) return null
 
+  const toggleOverrideAction = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    waf.override_action = waf.override_action === 'None' ? 'Count' : 'None';
+    mutate(updateWaf(query.id as string, waf), {
+      revalidate: false // 수정 요청이, 수정된 결과를 반환한다고 가정하고 개발되었음.
+    })
+  }
 
   const toggleActionToUse = (index: number) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     waf.rule_action_override[index].action_to_use = waf.rule_action_override[index].action_to_use === 'None' ? 'Count' : 'None';
@@ -66,14 +72,22 @@ export default function WafDetailPage() {
               </tr>
               <tr className="hover:bg-gray-50">
                 <td className="border p-2">override_action</td>
-                <td className="border p-2">{waf.override_action}</td>
+                <td className="border p-2 flex item-center justify-between">
+                  {waf.override_action}
+                  <Toggle 
+                    checked={waf.override_action === 'None' ? false : true} 
+                    onClick={toggleOverrideAction}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-semibold mb-4">rule_action_override</h1>
+        <h1 className="text-2xl font-semibold mb-4">{waf.name} 
+        
+        </h1>
         <div className="bg-white p-4 rounded shadow">
           <table className="w-full border">
             <thead>
