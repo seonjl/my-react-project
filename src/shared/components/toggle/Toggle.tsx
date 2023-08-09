@@ -48,7 +48,7 @@ export function Toggle({
         after:bg-white
         after:transition-all
         after:content-['']
-        peer-checked:bg-primary
+        peer-checked:bg-[#FF802D]
         peer-checked:after:translate-x-[85%]
         peer-checked:after:border-white
         peer-focus:outline-none
