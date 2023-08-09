@@ -1,0 +1,26 @@
+module.exports = {
+  white: '#FFFFFF',
+  'gray-5': '#F8F8FA',
+  'gray-10': '#F2F3F5',
+  'gray-20': '#E8EBF0',
+  'gray-30': '#DCE0E9',
+  'gray-40': '#C2C7D1',
+  'gray-50': '#9EA3AD',
+  'gray-60': '#73777E',
+  'gray-70': '#4B4E53',
+  black: '#1E1E1E',
+
+  'primary-light': '#FFF3EB',
+  primary: '#FF802D',
+  'primary-dark': '#CD5303',
+  'secondary-light': '#FFFAE9',
+  secondary: '#FFE381',
+  'secondary-dark': '#F5CB37',
+  'accent-light': '#E2F2FF',
+  accent: '#68BBFF',
+  'accent-dark': '#2092F0',
+
+  'system-danger': '#FD5056',
+  'system-success': '#38C77A',
+  'system-basic': '#FCF6F1',
+};
