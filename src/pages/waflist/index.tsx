@@ -37,7 +37,7 @@ export default function WafList() {
                 <tr className="hover:bg-gray-50" key={index}>
                   <td className="border p-2">{index + 1}</td>
                   <td className="border p-2">{Object.keys(item)[0]}</td>
-                  <td className="border p-2 flexitems-center justify-between">
+                  <td className="border p-2 flex items-center justify-between">
                      { Object.values(item)[0] }
                      <Link href={`/waflist/${Object.keys(item)[0]}`}>
                       <svg
