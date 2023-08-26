@@ -9,22 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.0.1",
     "@tanstack/react-query": "^4.32.6",
     "@types/node": "20.4.9",
     "@types/react": "18.2.19",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.14",
-    "eslint-config-next": "13.4.13",
+    "axios": "^1.4.0",
+    "date-fns": "^2.30.0",
     "next": "13.4.13",
     "postcss": "8.4.27",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "swr": "^2.2.0",
-    "tailwindcss": "3.3.3"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "tailwindcss": "3.3.3",
+    "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "eslint": "8.46.0",
+    "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^37.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",

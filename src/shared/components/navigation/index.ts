@@ -1,3 +1,3 @@
-import TopNavigation from './TopNavigation';
+import BottomNavigation from './BottomNavigation';
 
-export { TopNavigation };
+export { BottomNavigation };

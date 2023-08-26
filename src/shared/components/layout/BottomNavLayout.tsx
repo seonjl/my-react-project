@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import styles from './BottomNavLayout.module.css';
-import { TopNavigation } from '../navigation';
+import { BottomNavigation } from '../navigation';
 
 type BottomNavLayoutProps = {
   children: ReactNode;
@@ -10,8 +10,8 @@ type BottomNavLayoutProps = {
 export default function BottomNavLayout({ children }: BottomNavLayoutProps) {
   return (
     <div className={styles.layout}>
-      <TopNavigation />
       <div className="pb-bottom-nav">{children}</div>
+      <BottomNavigation />
     </div>
   );
 }

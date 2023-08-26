@@ -7,6 +7,6 @@ type GlobalLayoutProps = {
 
 export default function GlobalLayout({ children }: GlobalLayoutProps) {
   return (
-    <div className="mx-auto my-0 w-full">{children}</div>
+    <div className="w-full max-w-2xl">{children}</div>
   );
 }
