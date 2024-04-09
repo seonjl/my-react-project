@@ -1,24 +1,25 @@
-import React, { MouseEvent } from 'react';
+import { type MouseEvent } from 'react'
 
 interface ToggleProps {
-  checked: boolean;
-  className?: string;
-  size?: 'lg' | 'sm';
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  checked: boolean
+  className?: string
+  size?: 'lg' | 'sm'
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-export function Toggle({
+export function Toggle ({
   checked,
   onClick,
   size = 'sm',
-  className,
+  className
 }: ToggleProps) {
-  const width = getStyleClassNamesBySize(size);
+  const width = getStyleClassNamesBySize(size)
 
   return (
     <button
       type="button"
       onClick={onClick}
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       className={`relative inline-flex aspect-video cursor-pointer items-center ${className}`}
       style={{ width }}
     >
@@ -55,13 +56,13 @@ export function Toggle({
       `}
       />
     </button>
-  );
+  )
 }
 
-function getStyleClassNamesBySize(size: ToggleProps['size']) {
+function getStyleClassNamesBySize (size: ToggleProps['size']) {
   if (size === 'sm') {
-    return '30px';
+    return '30px'
   }
 
-  return '48px';
+  return '48px'
 }

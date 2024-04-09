@@ -1,3 +1,3 @@
-import GlobalLayout from './GlobalLayout';
+import GlobalLayout from "./GlobalLayout";
 
 export { GlobalLayout };

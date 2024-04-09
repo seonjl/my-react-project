@@ -1,12 +1,8 @@
-import { timeDifference } from "@/shared/utils/date/date";
-import Image from "next/image";
-import React from "react";
-import { IconSpeechBox, IconThumbsUp } from "../../../../public/svgs";
+import { timeDifference } from '@/shared/utils/date/date'
+import Image from 'next/image'
+import { IconSpeechBox, IconThumbsUp } from '../../../../public/svgs'
 
 const CommentCard = ({ comment }: any) => {
-
-  if (!comment) return <div>loading...</div>;
-
   return (
     <div className="border border-gray-50 m-1">
         <ul className="relative flex items-start gap-x-4 bg-gray-5 px-5 py-2">
@@ -37,7 +33,7 @@ const CommentCard = ({ comment }: any) => {
           </div>
         </ul>
     </div>
-  );
-};
+  )
+}
 
-export default CommentCard;
+export default CommentCard

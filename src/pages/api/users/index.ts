@@ -1,11 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 
-import { Users } from '../../../../stub'
+import { Users } from "../../../../stub";
 
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  res.status(200).json(Users)
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  res.status(200).json(Users);
 }
