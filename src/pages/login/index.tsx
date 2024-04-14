@@ -30,7 +30,7 @@ function KakaoLogin () {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     Kakao.Auth.authorize({
-      redirectUri: 'https://p9zrk5eaxk.execute-api.ap-northeast-2.amazonaws.com/internal/callback/kakao'
+      redirectUri: 'https://7fdojjp966.execute-api.ap-northeast-2.amazonaws.com/internal/callback/kakao'
     })
   }
 
