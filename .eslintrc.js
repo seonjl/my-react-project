@@ -26,5 +26,11 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "multiline-ternary": "off",
   },
 };

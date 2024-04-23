@@ -1,5 +1,5 @@
 // rediect To main page
-export default function Kakao () {
+export default function KakaoCallbackPage () {
   return (
     <div className="relative flex h-screen flex-col items-center pb-2 pt-12">
       <div className="absolute top-[7.5%] flex flex-col gap-y-4">

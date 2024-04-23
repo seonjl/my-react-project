@@ -1,30 +1,32 @@
 /* eslint-disable no-use-before-define */
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-export default function BottomNavigation () {
-  const router = useRouter()
+export default function BottomNavigation() {
+  const router = useRouter();
 
   return (
-    <div className="fixed bottom-0 flex h-bottom-nav w-screen items-center justify-between bg-white">
-      {/* home button */}
-      <button type="button">
-        <Link className="flex flex-col items-center" href="/">
-          HOME
+    <footer className="fixed bottom-0 flex h-bottom-nav w-screen items-center justify-around bg-white">
+      <button className="text-black-500">
+        <Link className="flex flex-col items-center" href="/main">
+          안녕
         </Link>
       </button>
-      {/* some button */}
-      <button type="button">
+      <button className="text-black-500">
         <Link className="flex flex-col items-center" href="/">
-          Some1
+          나는
         </Link>
       </button>
-      {/* mypage button */}
-      <button type="button">
+      <button className="text-black-500">
         <Link className="flex flex-col items-center" href="/">
-          My Page
+          푸터
         </Link>
       </button>
-    </div>
-  )
+      <button className="text-black-500">
+        <Link className="flex flex-col items-center" href="/">
+          이다
+        </Link>
+      </button>
+    </footer>
+  );
 }
