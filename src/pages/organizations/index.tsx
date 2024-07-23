@@ -39,11 +39,11 @@ export default function MainPage() {
               </svg>
             </button>
           </div>
-          <h1 className="text-lg font-semibold">내가 가입한 단체</h1>
+          <h1 className="text-lg font-semibold">타이틀</h1>
         </div>
         <div className="mt-4">
           <div className="mt-4">
-            <h3 className="font-semibold mb-2">XX 단체</h3>
+            <h3 className="font-semibold mb-2">XX 파티</h3>
             <ServiceCard
               serviceName="service"
               logoSrc="https://upload.wikimedia.org/wikipedia/commons/9/9e/Plus_symbol.svg"

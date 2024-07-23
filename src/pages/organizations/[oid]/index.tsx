@@ -1,9 +1,33 @@
+import { createMember } from "@/graphql/mutations";
 import BottomNavLayout from "@/shared/components/layout/BottomNavLayout";
-import Link from "next/link";
+import { generateClient } from "aws-amplify/api";
 import { useRouter } from "next/router";
+
+const client = generateClient();
 
 export default function MainPage() {
   const router = useRouter();
+  const oid = router.pathname.split("/")[2];
+
+  async function registerMember() {
+    return client.graphql({
+      query: createMember,
+      variables: {
+        input: {
+          organizationId: oid,
+          name: "홍길동",
+          role: "guest",
+          userId: "1234",
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+      },
+    });
+  }
+
+  async function handleRegisterButtonClicked() {
+    await registerMember();
+  }
 
   return (
     <div className="bg-gray-100">
@@ -33,7 +57,7 @@ export default function MainPage() {
               </svg>
             </button>
           </div>
-          <h1 className="text-lg font-semibold">내가 가입한 단체</h1>
+          <h1 className="text-lg font-semibold">타이틀</h1>
         </div>
         <div className="mt-4">
           <div className="bg-white text-gray-800">
@@ -53,8 +77,11 @@ export default function MainPage() {
                     </div>
                   </div>
                 </div>
-                <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300">
-                  이 회사 문의하기
+                <button
+                  className="mt-4 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300"
+                  onClick={handleRegisterButtonClicked}
+                >
+                  이 회사 가입하기
                 </button>
                 <div className="mt-4">
                   <h3 className="text-lg font-semibold border-b pb-2">
@@ -145,33 +172,3 @@ export default function MainPage() {
 MainPage.getLayout = function getLayout(page: React.ReactElement) {
   return <BottomNavLayout>{page}</BottomNavLayout>;
 };
-
-function ServiceCard({
-  serviceName,
-  logoSrc,
-  href = "/",
-}: {
-  serviceName: string;
-  logoSrc: string;
-  href?: string;
-  onChange: () => void;
-}) {
-  return (
-    <Link href={href}>
-      <div className="flex flex-col p-4 bg-gray-100 rounded-lg">
-        <div className="flex items-center justify-between">
-          <span>이름</span>
-          <span>{serviceName}</span>
-        </div>
-        <div className="flex items-center justify-between">
-          <span>소속</span>
-          <span>{serviceName}</span>
-        </div>
-        <div className="flex items-center justify-between">
-          <span>대표자</span>
-          <span>{serviceName}</span>
-        </div>
-      </div>
-    </Link>
-  );
-}

@@ -1,4 +1,5 @@
 import BottomNavLayout from "@/shared/components/layout/BottomNavLayout";
+import { useEffect } from "react";
 
 export default function Login() {
   return (
@@ -7,12 +8,10 @@ export default function Login() {
         <h1 className="font-title-medium-md font-medium text-black">타이틀</h1>
       </div>
       <script
-        src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"
-        integrity="sha384-kDljxUXHaJ9xAb2AzRd59KxjrFjzHa5TAoFQ6GbYTCAG0bjM55XohjjDT7tDDC01"
+        src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+        integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
         crossOrigin="anonymous"
       ></script>
-      <script></script>
-
       <article className="absolute bottom-[15%] flex flex-col items-center">
         <KakaoLogin />
       </article>
@@ -26,14 +25,20 @@ Login.getLayout = function getLayout(page: React.ReactElement) {
 
 function KakaoLogin() {
   const onClick = () => {
-    if (Kakao?.isInitialized()) {
-      Kakao.init("b838fc9b5f31dd8fed3c6003508b12d9");
-    }
     Kakao.Auth.authorize({
-      redirectUri:
-        "https://7fdojjp966.execute-api.ap-northeast-2.amazonaws.com/internal/callback/kakao",
+      // env
+      redirectUri: `${"https://zofg6ai9t8.execute-api.ap-northeast-2.amazonaws.com"}/internal/callback/kakao`,
     });
   };
+
+  useEffect(() => {
+    if (Kakao.isInitialized()) {
+      return;
+    }
+
+    // env
+    Kakao.init("b838fc9b5f31dd8fed3c6003508b12d9");
+  }, []);
 
   return (
     <button
@@ -41,7 +46,7 @@ function KakaoLogin() {
       className="font-button-medium-sm flex h-[49px] w-[335px] items-center justify-center gap-2.5 rounded-md bg-[#FAE54D]"
       onClick={onClick}
     >
-      <p>Hi</p>
+      <p>kakao login</p>
     </button>
   );
 }

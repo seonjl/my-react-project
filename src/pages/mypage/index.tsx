@@ -44,7 +44,7 @@ export default function MainPage() {
         <div className="mt-4">
           <div className="flex flex-col p-4 bg-gray-100 rounded-lg">
             <h3 className="font-semibold mb-2">계정관리</h3>
-            <h3 className="font-semibold mb-2">단체관리</h3>
+            <h3 className="font-semibold mb-2">파티관리</h3>
             <h3 className="font-semibold mb-2">로그아웃</h3>
           </div>
         </div>

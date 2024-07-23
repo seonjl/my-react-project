@@ -61,32 +61,16 @@ export default function MainPage() {
         <div className="mt-4">
           <TabSwitcher />
           <div className="flex justify-between items-center">
-            <h2 className="text-sm text-gray-600">현재 등록된 시민단체 수</h2>
+            <h2 className="text-sm text-gray-600">현재 등록된 파티 수</h2>
             <span className="text-green-500">9999 개</span>
           </div>
           <div className="mt-4">
             <h3 className="font-semibold mb-2">Intro</h3>
             <div className="grid grid-cols-2 gap-4">
               <ServiceCard
-                serviceName="활동하기"
-                logoSrc="public/svgs"
-                href="/organizations"
-                onChange={() => {
-                  setDisneyChecked(!disneyChecked);
-                }}
-              />
-              <ServiceCard
-                serviceName="관리하기"
-                logoSrc="public/svgs"
-                href="/main/admin"
-                onChange={() => {
-                  setYoutubeChecked(!youtubeChecked);
-                }}
-              />
-              <ServiceCard
-                serviceName="설립하기"
+                serviceName="만들기"
                 logoSrc="https://upload.wikimedia.org/wikipedia/commons/9/9e/Plus_symbol.svg"
-                href="/main/establish"
+                href="/main/build"
                 onChange={() => {}}
               />
               <ServiceCard
@@ -95,6 +79,22 @@ export default function MainPage() {
                 href="/main/search"
                 onChange={() => {
                   setTwitchChecked(!twitchChecked);
+                }}
+              />
+              <ServiceCard
+                serviceName="찾아보기"
+                logoSrc="public/svgs"
+                href="/main/search"
+                onChange={() => {
+                  setYoutubeChecked(!youtubeChecked);
+                }}
+              />
+              <ServiceCard
+                serviceName="활동하기"
+                logoSrc="public/svgs"
+                href="/organizations"
+                onChange={() => {
+                  setDisneyChecked(!disneyChecked);
                 }}
               />
             </div>

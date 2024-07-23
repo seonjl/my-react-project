@@ -1,15 +1,53 @@
+import { listOrganizations } from "@/graphql/queries";
 import BottomNavLayout from "@/shared/components/layout/BottomNavLayout";
+import { generateClient } from "aws-amplify/api";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const client = generateClient();
 
 export default function MainPage() {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
-  const [netflixChecked, setNetflixChecked] = useState(false);
-  const [youtubeChecked, setYoutubeChecked] = useState(false);
-  const [disneyChecked, setDisneyChecked] = useState(false);
-  const [twitchChecked, setTwitchChecked] = useState(false);
+  const [rankedOrganizations, setRankedOrganizations] = useState<any>([]);
+  const [searchedOrganizations, setSearchedOrganizations] = useState<any>([]);
+
+  async function listOrganization(searchName: string = "") {
+    let variables = {};
+
+    if (searchName) {
+      variables = {
+        filter: {
+          name: {
+            contains: searchName,
+          },
+        },
+      };
+    }
+
+    return client.graphql({
+      query: listOrganizations,
+      variables,
+    });
+  }
+
+  async function handleSearchValueChange(searchValue: string) {
+    setSearchValue(searchValue);
+
+    if (searchValue === "") {
+      return;
+    }
+
+    const response = await listOrganization(searchValue);
+    setSearchedOrganizations(response.data.listOrganizations?.items);
+  }
+
+  useEffect(() => {
+    void listOrganization().then((response) => {
+      setRankedOrganizations(response.data.listOrganizations?.items);
+    });
+  }, []);
 
   return (
     <div className="bg-gray-100">
@@ -39,46 +77,89 @@ export default function MainPage() {
               </svg>
             </button>
           </div>
-          <h1 className="text-lg font-semibold">검색해보세요</h1>
-        </div>
-        <div className="flex justify-between items-center border-b pb-4">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
-            alt={"logo"}
-            className="h-6"
-          />
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/4/45/Person_icon_%28the_Noun_Project_2817719%29.svg"
-            alt={"logo"}
-            className="h-6"
-          />
+          <h1 className="text-lg font-semibold">탐색</h1>
         </div>
         <div className="xmt-4">
           <h1 className="text-lg font-semibold mb-2 text-center">
-            가입하고 싶으신 단체를 찾아보세요!
+            가입하고 싶으신 파티를 찾아보세요!
           </h1>
 
           <h2 className="text-sm text-gray-600">
-            나와 가장 잘 맞는 단체를 찾아보세요. 같은 관심사를 가진 사람들과
+            나와 가장 잘 맞는 파티를 찾아보세요. 같은 관심사를 가진 사람들과
             소통해보세요.
           </h2>
 
           {/* if searchValue is exist searchInterface else nothing */}
-          <SearchInterface />
+          <div className="bg-white text-gray-900 p-5">
+            <div className="max-w-lg mx-auto">
+              <div className="flex items-center mb-4">
+                <form className="max-w-md w-full mx-5">
+                  <div className="relative">
+                    <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                      {/* 인원 수 아이콘 */}
+                      <svg
+                        className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="search"
+                      id="default-search"
+                      className="block w-full p-4 ps-10 text-sm text-wh-900 border border-gray-300 rounded-lg bg-gray-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="가입하려는 파티를 입력해주세요."
+                      required
+                      value={searchValue}
+                      onChange={async (e) => {
+                        void handleSearchValueChange(e.target.value);
+                      }}
+                    />
+                    {searchValue !== "" && (
+                      <div className="mt-4">
+                        <div className="row-gap-4 space-y-4">
+                          <OrganizationItem
+                            key={"dummy"}
+                            oid={"dummy"}
+                            name={"dummy"}
+                            memberCount={"1"}
+                          />
+                          {searchedOrganizations.map((organization: any) => (
+                            <OrganizationItem
+                              key={organization.id}
+                              oid={organization.id}
+                              name={organization.name}
+                              memberCount={"1"}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
           <div className="xmt-4">
-            <h2 className="text-sm text-gray-600">이러한 단체들은 어떠세요?</h2>
-            <div className="space-y-4">
-              <OrganizationItem oid="1" name="SK" memberCount="390" />
-              <OrganizationItem oid="1" name="SK텔레콤" memberCount="378" />
-              <OrganizationItem oid="1" name="SK브로드밴드" memberCount="279" />
-              <OrganizationItem oid="1" name="SK실트론" memberCount="219" />
+            <h2 className="text-sm text-gray-600">이러한 파티들은 어떠세요?</h2>
+            {rankedOrganizations.map((organization: any) => (
               <OrganizationItem
-                oid="1"
-                name="SK커뮤니케이션즈"
-                memberCount="168"
+                key={organization.id}
+                oid={organization.id}
+                name={organization.name}
+                memberCount={"1"}
               />
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -88,89 +169,6 @@ export default function MainPage() {
 MainPage.getLayout = function getLayout(page: React.ReactElement) {
   return <BottomNavLayout>{page}</BottomNavLayout>;
 };
-
-function ListCard({
-  serviceName,
-  logoSrc,
-  href = "/",
-  onClick,
-}: {
-  serviceName: string;
-  logoSrc: string;
-  href?: string;
-  onClick: () => void;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-  return (
-    // cursor hover change color
-    <button
-      className={`${
-        isHovered ? "border-blue-500" : "border-gray-300"
-      } border my-2`}
-      onMouseEnter={() => {
-        setIsHovered(true);
-      }}
-      onMouseLeave={() => {
-        setIsHovered(false);
-      }}
-      onClick={onClick}
-    >
-      <div className="relative flex items-start gap-x-4 bg-gray-5 px-5 py-2">
-        <img src={logoSrc} alt={serviceName} className="h-6" />
-
-        <div>
-          <ul className="flex flex-row items-center font-body-regular-sm">
-            <div>title</div>
-            <div className="font-caption-medium-sm text-gray-60 mx-1"></div>
-          </ul>
-          <ul className="flex font-body-regular-sm">
-            Saepe consequatur optio ratione modi provident.
-          </ul>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-export function SearchInterface() {
-  return (
-    <div className="bg-white text-gray-900 p-5">
-      <div className="max-w-lg mx-auto">
-        <div className="flex items-center mb-4">
-          <form className="max-w-md w-full mx-5">
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                {/* 인원 수 아이콘 */}
-                <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                id="default-search"
-                className="block w-full p-4 ps-10 text-sm text-wh-900 border border-gray-300 rounded-lg bg-gray-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="가입하려는 단체를 입력해주세요."
-                required
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export function OrganizationItem({
   oid,

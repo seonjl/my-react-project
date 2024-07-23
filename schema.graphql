@@ -1,0 +1,294 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Member {
+  createdAt: AWSDateTime!
+  id: ID!
+  name: String!
+  organizationId: ID!
+  role: String!
+  updatedAt: AWSDateTime!
+  userId: ID!
+}
+
+type MemberConnection {
+  items: [Member]
+  nextToken: String
+}
+
+type Mutation {
+  createMember(input: CreateMemberInput!): Member
+  createOrganization(input: CreateOrganizationInput!): Organization
+  createPost(input: CreatePostInput!): Post
+  createUser(input: CreateUserInput!): User
+  deleteMember(input: DeleteMemberInput!): Member
+  deleteOrganization(input: DeleteOrganizationInput!): Organization
+  deletePost(input: DeletePostInput!): Post
+  deleteUser(input: DeleteUserInput!): User
+  updateMember(input: UpdateMemberInput!): Member
+  updateOrganization(input: UpdateOrganizationInput!): Organization
+  updatePost(input: UpdatePostInput!): Post
+  updateUser(input: UpdateUserInput!): User
+}
+
+type Organization {
+  createdAt: AWSDateTime!
+  description: String
+  id: ID!
+  name: String!
+  updatedAt: AWSDateTime!
+}
+
+type OrganizationConnection {
+  items: [Organization]
+  nextToken: String
+}
+
+type Post {
+  createdAt: AWSDateTime!
+  description: String
+  id: ID!
+  name: String!
+  updatedAt: AWSDateTime!
+}
+
+type PostConnection {
+  items: [Post]
+  nextToken: String
+}
+
+type Query {
+  getMember(id: ID!): Member
+  getOrganization(id: ID!): Organization
+  getPost(id: ID!): Post
+  getUser(id: ID!): User
+  listMembers(filter: TableMemberFilterInput, limit: Int, nextToken: String): MemberConnection
+  listOrganizations(filter: TableOrganizationFilterInput, limit: Int, nextToken: String): OrganizationConnection
+  listPosts(filter: TablePostFilterInput, limit: Int, nextToken: String): PostConnection
+  listUsers(filter: TableUserFilterInput, limit: Int, nextToken: String): UserConnection
+}
+
+type Subscription {
+  onCreateMember(id: ID, name: String, organizationId: ID, role: String, userId: ID): Member @aws_subscribe(mutations : ["createMember"])
+  onCreateOrganization(createdAt: AWSDateTime, description: String, id: ID, name: String, updatedAt: AWSDateTime): Organization @aws_subscribe(mutations : ["createOrganization"])
+  onCreatePost(createdAt: AWSDateTime, description: String, id: ID, name: String, updatedAt: AWSDateTime): Post @aws_subscribe(mutations : ["createPost"])
+  onCreateUser(email: String, id: ID, mobile: String, name: String, pid: String): User @aws_subscribe(mutations : ["createUser"])
+  onDeleteMember(id: ID, name: String, organizationId: ID, role: String, userId: ID): Member @aws_subscribe(mutations : ["deleteMember"])
+  onDeleteOrganization(createdAt: AWSDateTime, description: String, id: ID, name: String, updatedAt: AWSDateTime): Organization @aws_subscribe(mutations : ["deleteOrganization"])
+  onDeletePost(createdAt: AWSDateTime, description: String, id: ID, name: String, updatedAt: AWSDateTime): Post @aws_subscribe(mutations : ["deletePost"])
+  onDeleteUser(email: String, id: ID, mobile: String, name: String, pid: String): User @aws_subscribe(mutations : ["deleteUser"])
+  onUpdateMember(id: ID, name: String, organizationId: ID, role: String, userId: ID): Member @aws_subscribe(mutations : ["updateMember"])
+  onUpdateOrganization(createdAt: AWSDateTime, description: String, id: ID, name: String, updatedAt: AWSDateTime): Organization @aws_subscribe(mutations : ["updateOrganization"])
+  onUpdatePost(createdAt: AWSDateTime, description: String, id: ID, name: String, updatedAt: AWSDateTime): Post @aws_subscribe(mutations : ["updatePost"])
+  onUpdateUser(email: String, id: ID, mobile: String, name: String, pid: String): User @aws_subscribe(mutations : ["updateUser"])
+}
+
+type User {
+  createdAt: AWSDateTime!
+  description: String
+  id: ID!
+  name: String!
+  updatedAt: AWSDateTime!
+}
+
+type UserConnection {
+  items: [User]
+  nextToken: String
+}
+
+input CreateMemberInput {
+  createdAt: AWSDateTime
+  name: String!
+  organizationId: ID!
+  role: String!
+  updatedAt: AWSDateTime
+  userId: ID!
+}
+
+input CreateOrganizationInput {
+  createdAt: AWSDateTime
+  description: String
+  name: String!
+  updatedAt: AWSDateTime
+}
+
+input CreatePostInput {
+  createdAt: AWSDateTime
+  description: String
+  name: String!
+  updatedAt: AWSDateTime
+}
+
+input CreateUserInput {
+  connectedAt: AWSDateTime!
+  createdAt: AWSDateTime
+  email: String!
+  mobile: String!
+  name: String!
+  pid: String!
+  provider: String!
+  updatedAt: AWSDateTime
+}
+
+input DeleteMemberInput {
+  id: ID!
+}
+
+input DeleteOrganizationInput {
+  id: ID!
+}
+
+input DeletePostInput {
+  id: ID!
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+input ModelSizeInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input TableBooleanFilterInput {
+  attributeExists: Boolean
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  attributeExists: Boolean
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+}
+
+input TableIDFilterInput {
+  attributeExists: Boolean
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  size: ModelSizeInput
+}
+
+input TableIntFilterInput {
+  attributeExists: Boolean
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input TableMemberFilterInput {
+  createdAt: TableStringFilterInput
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+  organizationId: TableIDFilterInput
+  role: TableStringFilterInput
+  updatedAt: TableStringFilterInput
+  userId: TableIDFilterInput
+}
+
+input TableOrganizationFilterInput {
+  createdAt: TableStringFilterInput
+  description: TableStringFilterInput
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+  updatedAt: TableStringFilterInput
+}
+
+input TablePostFilterInput {
+  createdAt: TableStringFilterInput
+  description: TableStringFilterInput
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+  updatedAt: TableStringFilterInput
+}
+
+input TableStringFilterInput {
+  attributeExists: Boolean
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  size: ModelSizeInput
+}
+
+input TableUserFilterInput {
+  connectedAt: TableStringFilterInput
+  createdAt: TableStringFilterInput
+  email: TableStringFilterInput
+  id: TableIDFilterInput
+  mobile: TableStringFilterInput
+  name: TableStringFilterInput
+  pid: TableStringFilterInput
+  provider: TableStringFilterInput
+  updatedAt: TableStringFilterInput
+}
+
+input UpdateMemberInput {
+  createdAt: AWSDateTime
+  id: ID!
+  name: String
+  organizationId: ID
+  role: String
+  updatedAt: AWSDateTime
+  userId: ID
+}
+
+input UpdateOrganizationInput {
+  createdAt: AWSDateTime
+  description: String
+  id: ID!
+  name: String
+  updatedAt: AWSDateTime
+}
+
+input UpdatePostInput {
+  createdAt: AWSDateTime
+  description: String
+  id: ID!
+  name: String
+  updatedAt: AWSDateTime
+}
+
+input UpdateUserInput {
+  connectedAt: AWSDateTime
+  createdAt: AWSDateTime
+  email: String
+  id: ID!
+  mobile: String
+  name: String
+  pid: String
+  provider: String
+  updatedAt: AWSDateTime
+}
